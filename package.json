@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "description": "Execute request, cache it and serve it again",
   "main": "dist/memento.js",
+  "types": "dist/index.d.ts",
   "scripts": {
     "test": "mocha -r ts-node/register tests/**/*.test.ts"
   },
