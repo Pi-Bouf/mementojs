@@ -1,0 +1,14 @@
+node_modules/
+*.log
+*.tgz
+src/
+tests/
+dist/*
+tsconfig.json
+.idea
+.rts*
+
+!dist/Memento.js
+!dist/Memento.umd.js
+!dist/Memento.module.js
+!index.d.ts
