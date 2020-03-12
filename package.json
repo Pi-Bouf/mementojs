@@ -1,16 +1,12 @@
 {
   "name": "mementojs",
-  "version": "0.0.1",
+  "version": "0.0.4",
   "description": "Execute request, cache it and serve it again",
-  "main": "dist/mementojs.js",
-  "umd:main": "dist/mementojs.umd.js",
-  "module": "dist/mementojs.module.js",
-  "types": "index.d.ts",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
   "scripts": {
     "test": "mocha -r ts-node/register tests/**/*.test.ts",
-    "build": "microbundle src/index.ts -f cjs,es,umd",
-    "dts": "dts-generator --out index.d.ts --project .",
-    "prepublish": "npm run build && npm run dts"
+    "build": "tsc"
   },
   "repository": {
     "type": "git",
@@ -26,8 +22,6 @@
     "@types/chai": "^4.2.10",
     "@types/mocha": "^7.0.2",
     "chai": "^4.2.0",
-    "dts-generator": "^3.0.0",
-    "microbundle": "^0.11.0",
     "mocha": "^7.1.0",
     "ts-node": "^8.6.2",
     "typescript": "^3.8.2"

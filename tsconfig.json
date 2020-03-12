@@ -1,16 +1,17 @@
 {
   "compilerOptions": {
     "target": "es5",
-    "module": "es2015",
+    "module": "commonjs",
     "lib": ["es2017", "es7", "es6", "dom"],
     "outDir": "dist",
     "rootDir": "src",
     "strict": true,
     "esModuleInterop": true,
-    "sourceMap": false
+    "sourceMap": false,
+    "declaration": true
   },
-  "include": [
-    "./src/**/*.ts"
+  "files": [
+    "src/index.ts"
   ],
   "exclude": [
     "node_modules",

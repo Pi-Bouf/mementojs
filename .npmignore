@@ -8,7 +8,4 @@ tsconfig.json
 .idea
 .rts*
 
-!dist/Memento.js
-!dist/Memento.umd.js
-!dist/Memento.module.js
-!index.d.ts
+!dist/*

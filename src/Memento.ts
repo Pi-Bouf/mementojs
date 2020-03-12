@@ -1,11 +1,13 @@
+import {Request} from "./Request";
+
 export class Memento<T> {
 
     constructor() {
-        console.log("Hello, test :D");
+
     }
 
     request(id: string, callback: (test: T) => void)
     {
-
+        new Request();
     }
 }
