@@ -1,10 +1,11 @@
 {
   "name": "mementojs",
-  "version": "0.0.4",
+  "version": "1.0.0",
   "description": "Execute request, cache it and serve it again",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "scripts": {
+    "prepublish": "npm run test && npm run build",
     "test": "mocha -r ts-node/register tests/**/*.test.ts",
     "build": "tsc"
   },
