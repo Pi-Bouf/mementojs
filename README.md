@@ -27,7 +27,7 @@ npm install --save mementojs
 yarn add mementojs
 ```
 
-#### Usage
+# Usage
 Before all, you need to extend the class Memento (***extend only***) and implement the `load` function.
 
 ```
