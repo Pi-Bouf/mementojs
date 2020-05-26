@@ -4,6 +4,7 @@ node_modules/
 src/
 tests/
 dist/*
+examples/*
 tsconfig.json
 .idea
 .rts*

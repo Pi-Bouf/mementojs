@@ -21,7 +21,7 @@ Install by `npm`
 npm install --save mementojs
 ```
 
-**or** install with `yarn` (this project is developed using `yarn`)
+**or** install with `yarn`
 
 ```sh
 yarn add mementojs
@@ -31,13 +31,13 @@ yarn add mementojs
 Before all, you need to extend the class Memento (***extend only***) and implement the `load` function.
 
 ```
-export class ImageDownloader extends Memento<HTMLImageElement> {
+export class JSONDownloader extends Memento<HTMLImageElement> {
     
     // Load function need to be implemented ! 
-    load(id: string, request: Request<HTMLImageElement>): void {
+    load(id: string, request: Request<string>): void {
         
         // Execute the first request
-        fetch('http://example.com/image-example.png').then(result: HTMLImageElement => {
+        fetch('http://example.com/image-example.png').then(result: string => {
 
             // Store the data in the cache & notify every listeners
             request.setData(result);
@@ -48,18 +48,27 @@ export class ImageDownloader extends Memento<HTMLImageElement> {
 
 Now, in your main code, you can just make request like this:
 ```
-let imageDownloader = new ImageDownloader();
+let jsonDownloader = new JSONDownloader();
 
-memento.request("image-1", (data: HTMLImageElement) => {
+jsonDownloader.request("json-city", (data: HTMLImageElement) => {
     // Get your data here ! 
 });
 
-memento.request("image-1", (data: HTMLImageElement) => {
+jsonDownloader.request("json-city", (data: HTMLImageElement) => {
     // Get your data again, without waiting because it's already loaded :)
+});
+
+jsonDownloader.request("json-country", (data: HTMLImageElement) => {
+    // Request another data :)
 });
 ```
 All request will be executed one time, but notify every listeners when they will be done.
+
+# Options
+* maxSimultaneousRequest: Determine the number of conccurency request
+
+
 # Todo
 - [ ] Max age caching
 - [ ] Max request caching
-- [ ] Max simultaneous request 
+- [x] Max simultaneous request 
