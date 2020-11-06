@@ -30,7 +30,7 @@ yarn add mementojs
 # Usage
 Before all, you need to extend the class Memento (***extend only***) and implement the `load` function.
 
-```
+```ts
 export class JSONDownloader extends Memento<HTMLImageElement> {
     
     // Load function need to be implemented ! 
@@ -47,7 +47,7 @@ export class JSONDownloader extends Memento<HTMLImageElement> {
 ```
 
 Now, in your main code, you can just make request like this:
-```
+```ts
 let jsonDownloader = new JSONDownloader();
 
 jsonDownloader.request("json-city", (data: HTMLImageElement) => {
