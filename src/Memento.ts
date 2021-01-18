@@ -50,9 +50,15 @@ export abstract class Memento<T> {
 
     private executeNextRequest() {
         let nextId = this._waitingRequests.shift();
-        if(nextId === undefined) return;
+        if(nextId === undefined) {
+            this._loadingRequestCount--;
+            return;
+        }
         let nextRequest = this._requests.get(nextId);
-        if(nextRequest === undefined) return;
+        if(nextRequest === undefined) {
+            this._loadingRequestCount--;
+            return;
+        }
 
         this.load(nextId, nextRequest);
     }

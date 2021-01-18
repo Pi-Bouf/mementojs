@@ -1,5 +1,7 @@
 // @ts-ignore
 import {TimeoutMemento} from "./Resources/TimeoutMemento";
+// @ts-ignore
+import {SyncMemento} from './Resources/SyncMemento';
 import {expect} from "chai";
 
 describe('Memento unit tests', () => {
@@ -117,5 +119,18 @@ describe('Memento unit tests', () => {
       expect(new Date().getTime() - startingTime > 900).is.eq(true);
       done();
     });
+  });
+
+  it("Check duplicate requests but with maxSimultaneous", (done) => {
+    let memento = new SyncMemento({maxSimultaneousRequest: 1});
+
+    memento.request("request-1", data => {});
+    memento.request("request-2", data => {});
+    memento.request("request-3", data => {});
+    memento.request("request-4", data => {});
+    memento.request("request-3", data => {});
+    memento.request("request-4", data => {});
+    memento.request("request-3", data => {});
+    memento.request("request-4", data => { done() });
   });
 });
