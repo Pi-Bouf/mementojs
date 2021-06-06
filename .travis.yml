@@ -1,5 +1,7 @@
 language: javascript
 node_js:
   - 15
+  - 14
   - 13
-  - 10
+  - 12
+  - 11
