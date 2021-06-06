@@ -4,8 +4,8 @@
 
 # mementojs
 
-A lightweight and dependency-free cache system for manager like a downloader.
-Execute request, store the data and re-serve it with at next request. 
+A lightweight and dependency-free cache system for manager like a downloader, texture renderer, ect...
+Execute request, store the data and re-serve it with at next request.
 
 You can use it on node, browser in JS or TS :)
 
@@ -37,10 +37,13 @@ export class JSONDownloader extends Memento<HTMLImageElement> {
     load(id: string, request: Request<string>): void {
         
         // Execute the first request
-        fetch('http://example.com/image-example.png').then(result: string => {
+        fetch('http://all-city-jsons.com/' + id + '.json').then(result: string => {
 
             // Store the data in the cache & notify every listeners
             request.setData(result);
+        }).catch(() => {
+            // Store the error, preventing next loading
+            request.setError("Big fail, sorry, we can't download your file !")
         });
     }
 }
@@ -52,10 +55,12 @@ let jsonDownloader = new JSONDownloader();
 
 jsonDownloader.request("json-city", (data: HTMLImageElement) => {
     // Get your data here ! 
+}, error => {
+    // Get your error here too ;) !
 });
 
 jsonDownloader.request("json-city", (data: HTMLImageElement) => {
-    // Get your data again, without waiting because it's already loaded :)
+    // Get your data again, without waiting because it's already loaded :) in the memento class !
 });
 
 jsonDownloader.request("json-country", (data: HTMLImageElement) => {
