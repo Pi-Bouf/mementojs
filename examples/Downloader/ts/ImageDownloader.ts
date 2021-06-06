@@ -7,6 +7,9 @@ export class ImageDownloader extends Memento<HTMLImageElement> {
     public load(id: string, request: Request<HTMLImageElement>) {
         console.info("Starting execute request...", id);
         setTimeout(() => {
+            if(Math.random() > 0.5) {
+                request.setError("Aaaarg, random error !");
+            }
             request.setData(new Image());
         }, 5000);
     }

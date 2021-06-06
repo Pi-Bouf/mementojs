@@ -66,9 +66,3 @@ All request will be executed one time, but notify every listeners when they will
 
 # Options
 * maxSimultaneousRequest: Determine the number of conccurency request
-
-
-# Todo
-- [ ] Max age caching
-- [ ] Max request caching
-- [x] Max simultaneous request 

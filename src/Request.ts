@@ -1,19 +1,28 @@
 export class Request<T> {
     private _data: T | undefined;
+    private _error: string | undefined;
     private _ready: boolean;
-    private _callbacks: Array<(data: T) => void>;
+    private _dataCallbacks: Array<(data: T) => void>;
+    private _errorCallbacks: Array<(error: string) => void>;
 
     constructor() {
         this._data = undefined;
+        this._error = undefined;
         this._ready = false;
-        this._callbacks = [];
+        this._dataCallbacks = [];
+        this._errorCallbacks = [];
     }
 
-    attach(callback: (data: T) => void) {
-        if(this._ready && this._data !== undefined) {
-            callback(this._data);
+    attach(dataCallback: (data: T) => void, errorCallback?: (error: string) => void) {
+        if(errorCallback !== undefined && this._ready && this._error !== undefined) {
+            errorCallback(this._error);
+        } else if (this._ready && this._data !== undefined) {
+            dataCallback(this._data);
         } else {
-            this._callbacks.push(callback);
+            this._dataCallbacks.push(dataCallback);
+            if(errorCallback !== undefined) {
+                this._errorCallbacks.push(errorCallback);
+            }
         }
     }
 
@@ -21,14 +30,26 @@ export class Request<T> {
         this._data = data;
         this._ready = true;
 
-        this._callbacks.forEach(listener => {
+        this._dataCallbacks.forEach(listener => {
            listener(data);
         });
 
         this.clearAllListeners();
     }
 
+    setError(error: string) {
+        this._error = error;
+        this._ready = true;
+
+        this._errorCallbacks.forEach(listener => {
+            listener(error);
+        });
+
+        this.clearAllListeners();
+    }
+
     private clearAllListeners() {
-        this._callbacks = [];
+        this._dataCallbacks = [];
+        this._errorCallbacks = [];
     }
 }

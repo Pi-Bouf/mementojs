@@ -1,5 +1,5 @@
-import {Request} from "./Request";
-import {IMementoConfiguration} from "./IMementoConfiguration";
+import {Request} from './Request';
+import {IMementoConfiguration} from './IMementoConfiguration';
 
 export abstract class Memento<T> {
 
@@ -15,21 +15,20 @@ export abstract class Memento<T> {
         this._loadingRequestCount = 0;
     }
 
-    request(id: string, callback: (data: T) => void)
-    {
+    request(id: string, dataCallback: (data: T) => void, errorCallback?: (error: string) => void) {
         let request = this._requests.get(id);
 
-        if(request !== undefined) {
-            request.attach(callback);
+        if (request !== undefined) {
+            request.attach(dataCallback, errorCallback);
         } else {
-            this.newRequest(id, callback);
+            this.newRequest(id, dataCallback, errorCallback);
         }
     }
 
-    private newRequest(id: string, firstCallback: (data: T) => void) {
+    private newRequest(id: string, firstDataCallback: (data: T) => void, firstErrorCallback?: (error: string) => void) {
         let newRequest = new Request<T>();
-        newRequest.attach(firstCallback);
-        newRequest.attach(() => {this.executedRequest(id)});
+        newRequest.attach(firstDataCallback, firstErrorCallback);
+        newRequest.attach(() => {this.executedRequest();}, () => {this.executedRequest();});
 
         this._requests.set(id, newRequest);
         this._waitingRequests.push(id);
@@ -38,8 +37,8 @@ export abstract class Memento<T> {
     }
 
     private executeAll() {
-        if(this._configuration?.maxSimultaneousRequest !== undefined) {
-            if(this._configuration.maxSimultaneousRequest > this._loadingRequestCount) {
+        if (this._configuration?.maxSimultaneousRequest !== undefined) {
+            if (this._configuration.maxSimultaneousRequest > this._loadingRequestCount) {
                 this._loadingRequestCount++;
                 this.executeNextRequest();
             }
@@ -50,12 +49,12 @@ export abstract class Memento<T> {
 
     private executeNextRequest() {
         let nextId = this._waitingRequests.shift();
-        if(nextId === undefined) {
+        if (nextId === undefined) {
             this._loadingRequestCount--;
             return;
         }
         let nextRequest = this._requests.get(nextId);
-        if(nextRequest === undefined) {
+        if (nextRequest === undefined) {
             this._loadingRequestCount--;
             return;
         }
@@ -63,7 +62,7 @@ export abstract class Memento<T> {
         this.load(nextId, nextRequest);
     }
 
-    private executedRequest(id: string) {
+    private executedRequest() {
         this._loadingRequestCount--;
         this.executeAll();
     }
